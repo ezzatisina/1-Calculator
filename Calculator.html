@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>This is My Calculator</title>
+		<style>
+			div.calculator-wrapper{
+				width: 280px;
+				height: 370px;
+				position: relative;
+				margin: 50px auto;
+				border-radius: 5px;
+				background: #202021;
+				box-shadow: 1px 4px 10px 1px rgba(0, 0, 0, 0.4);
+			}
+			div.display-area-wrapper{
+				width: 260px;
+				height: 80px;
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				border-radius: 5px;
+				background: #313133;
+				box-shadow: 0px 0px 10px 0px #e8e535;
+			}
+			div.display-area{
+				width: 230px;
+				height: 80px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: 5px;
+				background: #313133;
+				font-size: 32px;
+				font-weight: 800;
+				font-family: Courier, monospace;
+				line-height: 80px;
+				color: #fff;
+				padding: 0 10px;
+				cursor: default;
+				overflow: hidden;
+			}
+			div.numbers-wrapper{
+				width: 195px;
+				height: 200px;
+				position: absolute;
+				top: 110px;
+				left: 10px;
+			}
+			.numbers{
+				width: 55px;
+				height: 40px;
+				border-radius: 5px;
+				position: relative;
+				margin: 0 10px 10px 0;
+				background: #202021;
+				border-color: #202021;
+				color: #e8e535;
+				font-size: 24px;
+				font-weight: 800;
+				font-family: Tahoma;
+				box-shadow: 0px 0px 10px 0px #e8e535;
+				float: left;
+				cursor: pointer;
+				transition: all 0.2s ease;
+			}
+			.numbers:hover{
+				color: #eda221;
+				box-shadow: 0px 0px 10px 0px #eda221;
+			}
+			.numbers:focus{
+				outline: none !important;
+			}
+			div.operator-wrapper{
+				width: 60px;
+				height: 250px;
+				position: absolute;
+				top: 110px;
+				right: 10px;
+			}
+			.operators{
+				width: 60px;
+				height: 40px;
+				position: relative;
+				border-radius: 5px;
+				margin: 0 10px 10px 0;
+				background: #202021;
+				border-color: #202021;
+				color: #e8e535;
+				font-size: 24px;
+				font-weight: 800;
+				font-family: Tahoma;
+				box-shadow: 0px 0px 10px 0px #e8e535;
+				cursor: pointer;
+				float: left;
+				transition: all 0.2s ease;
+			}
+			.operators:hover{
+				color: #eda221;
+				box-shadow: 0px 0px 10px 0px #eda221;
+			}
+			.operators:focus{
+				outline: none !important;
+			}
+			div.logo{
+				width: 180px;
+				height: 30px;
+				position: absolute;
+				left: 20px;
+				bottom: 20px;
+				color: #5b3d09;
+				font-size: 12px;
+				font-weight: 800;
+				line-height: 30px;
+				letter-spacing: 1px;
+				font-family: Tahoma;
+				text-transform: uppercase;
+			}
+		</style>
+	</head>
+	<body>
+		<script text/JavaScript>
+			var i = '';
+			var j = 0;
+			var operand = 10;
+			var sum = 0;
+			var t = 0;
+			var s = 0;
+			var r = 0;
+			var u = 0;
+			function clearAll(number){
+				i = '';
+				j = 0;
+				operand = 10;
+				sum = 0;
+				t = 0;
+				s = 0;
+				r = 0;
+				u = 0;
+				document.getElementById('demo').innerHTML = i;
+			}
+			function displayNumber(number){
+				if (r == 1){
+					j = 0;
+				}
+				s = 1;
+				t = 0;
+				i = i + number;
+				document.getElementById('demo').innerHTML = i;
+			}
+			function displayFloat(number){
+				if (u == 0){
+					if (r == 1){
+						j = 0;
+					}
+					s = 1;
+					t = 0;
+					i = i + number;
+					document.getElementById('demo').innerHTML = i;
+					u = 1;
+				}
+			}
+			function operator(number){
+				if (s == 1){
+					t = 0;
+					if (j == 0){
+						j = i;
+						i = '';
+						operand = parseInt(number);
+						document.getElementById('demo').innerHTML = j;
+					}else{
+						if (i == ''){
+							operand = parseInt(number);
+							document.getElementById('demo').innerHTML = j;
+						}else{
+							displayEq(number);
+							operand = parseInt(number);
+							document.getElementById('demo').innerHTML = j;
+						}
+					}
+					r = 0;
+					u = 0;
+				}
+			}
+			function displayEq(number){
+				if (i == ''){
+					document.getElementById('demo').innerHTML = j;
+				}else{
+					if (t == 1){
+						document.getElementById('demo').innerHTML = j;
+					}
+					if (t == 0){
+						if (operand == 10){
+							sum = parseFloat(j) + parseFloat(i);
+						}
+						if (operand == 20){
+							sum = parseFloat(j) - parseFloat(i);
+						}
+						if (operand == 30){
+							sum = parseFloat(j) * parseFloat(i);
+						}
+						if (operand == 40){
+							sum = parseFloat(j) / parseFloat(i);
+						}
+						document.getElementById('demo').innerHTML = sum;
+						j = sum;
+						t = 1;
+						r = 1;
+						u = 0;
+						i = '';
+					}
+				}
+			}
+		</script>
+		<div class="calculator-wrapper">
+			<div class="display-area-wrapper">
+				<div id='demo' class='display-area'></div>
+			</div>
+			<div class="numbers-wrapper">
+				<button type="button" onclick="displayNumber('7')" class="numbers">7</button>
+				<button type="button" onclick="displayNumber('8')" class="numbers">8</button>
+				<button type="button" onclick="displayNumber('9')" class="numbers">9</button>
+				<button type="button" onclick="displayNumber('4')" class="numbers">4</button>
+				<button type="button" onclick="displayNumber('5')" class="numbers">5</button>
+				<button type="button" onclick="displayNumber('6')" class="numbers">6</button>
+				<button type="button" onclick="displayNumber('1')" class="numbers">1</button>
+				<button type="button" onclick="displayNumber('2')" class="numbers">2</button>
+				<button type="button" onclick="displayNumber('3')" class="numbers">3</button>
+				<button type="button" onclick="clearAll('C')" class="numbers">C</button>
+				<button type="button" onclick="displayFloat('.')" class="numbers">.</button>
+				<button type="button" onclick="displayNumber('0')" class="numbers">0</button>
+			</div>
+			<div class="operator-wrapper">
+				<button type="button" onclick="operator(40)" class="operators">/</button>
+				<button type="button" onclick="operator(30)" class="operators">X</button>
+				<button type="button" onclick="operator(20)" class="operators">-</button>
+				<button type="button" onclick="operator(10)" class="operators">+</button>
+				<button type="button" onclick="displayEq('=')" class="operators">=</button>
+			</div>
+			<div class="logo">&copy; made in china 2018</div>
+		</div>
+	</body>
+</html>
